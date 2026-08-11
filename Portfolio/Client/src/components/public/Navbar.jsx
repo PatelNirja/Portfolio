@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useTheme } from "../../hooks/useTheme";
-import { Sun, Moon, Menu, X, Code2 } from "lucide-react";
+import { motion } from "framer-motion";
+import { Menu, X, Code2 } from "lucide-react";
 
 const navLinks = [
   { name: "About", href: "#about" },
@@ -9,14 +9,15 @@ const navLinks = [
   { name: "Projects", href: "#projects" },
   { name: "Experience", href: "#experience" },
   { name: "Education", href: "#education" },
-  { name: "Certificates", href: "#certificates" },
+  { name: "Achievements", href: "#achievements" },
   { name: "Contact", href: "#contact" },
 ];
 
 export default function Navbar({ profile }) {
-  const { theme, toggleTheme } = useTheme();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const name = profile?.name || "Nirja Patel";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,81 +31,79 @@ export default function Navbar({ profile }) {
     <header
       className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
         isScrolled
-          ? "bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200/50 dark:border-slate-800/50 shadow-sm"
-          : "bg-transparent py-2"
+          ? "bg-[var(--surface)]/90 backdrop-blur-md border-b border-[var(--border)] shadow-lg"
+          : "bg-transparent py-3"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        {/* Brand Logo */}
+        {/* Brand Wordmark with Person's Actual Name */}
         <a href="#" className="flex items-center gap-2.5 group">
-          <div className="p-2 rounded-xl bg-gradient-to-tr from-sky-600 to-indigo-600 text-white shadow-md group-hover:scale-105 transition-transform">
+          <div className="p-2 rounded-xl bg-[var(--accent-bg)] border border-[var(--accent-border)]/40 text-[var(--accent)] transition-transform group-hover:scale-105">
             <Code2 className="w-5 h-5" />
           </div>
-          <span className="font-extrabold text-lg tracking-tight text-slate-900 dark:text-slate-100">
-            {profile?.name || "Portfolio"}
+          <span className="font-heading font-bold text-lg tracking-tight text-[var(--text)] group-hover:text-[var(--accent)] transition-colors">
+            {name}
           </span>
         </a>
 
-        {/* Desktop Links */}
-        <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
+        {/* Desktop Links with Underline Draw-In from Left */}
+        <nav className="hidden md:flex items-center gap-7 text-sm font-sans font-medium">
           {navLinks.map((link) => (
             <a
               key={link.name}
               href={link.href}
-              className="text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition-colors"
+              className="relative py-1 text-[var(--text-muted)] hover:text-[var(--text)] transition-colors group"
             >
-              {link.name}
+              <span>{link.name}</span>
+              <span className="absolute bottom-0 left-0 w-full h-[2px] bg-[var(--accent)] origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-200 ease-out" />
             </a>
           ))}
         </nav>
 
         {/* Actions */}
         <div className="flex items-center gap-3">
-          <button
-            onClick={toggleTheme}
-            className="p-2 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
-            aria-label="Toggle Dark Mode"
-          >
-            {theme === "dark" ? <Sun className="w-5 h-5 text-amber-400" /> : <Moon className="w-5 h-5" />}
-          </button>
-
-          {/* Admin Login Link */}
-          <Link
-            to="/admin/login"
-            className="hidden sm:inline-flex px-4 py-2 text-xs font-bold text-sky-600 dark:text-sky-400 bg-sky-50 dark:bg-sky-950/50 hover:bg-sky-100 dark:hover:bg-sky-900/60 rounded-xl transition-all border border-sky-200 dark:border-sky-800/60"
-          >
-            Admin Portal
+          {/* Admin Portal Button in JetBrains Mono */}
+          <Link to="/admin/login">
+            <motion.span
+              whileHover={{ scale: 1.03 }}
+              transition={{ duration: 0.15, ease: "easeOut" }}
+              className="hidden sm:inline-flex px-4 py-2 font-mono text-xs font-semibold text-[var(--accent)] bg-[var(--surface)] border border-[var(--border)] hover:bg-[var(--surface-hover)] rounded-xl transition-all shadow-sm"
+            >
+              Admin Portal
+            </motion.span>
           </Link>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Menu Toggle */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 rounded-xl text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
+            className="md:hidden p-2.5 rounded-xl text-[var(--text-muted)] hover:text-[var(--text)] bg-[var(--surface)] border border-[var(--border)]"
+            aria-label="Toggle Navigation Menu"
           >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
       </div>
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-4 pt-2 pb-6 space-y-3 shadow-xl">
+        <div className="md:hidden bg-[var(--surface)] border-b border-[var(--border)] px-4 pt-3 pb-6 space-y-3 shadow-2xl">
           {navLinks.map((link) => (
             <a
               key={link.name}
               href={link.href}
               onClick={() => setMobileMenuOpen(false)}
-              className="block text-base font-semibold text-slate-700 dark:text-slate-300 hover:text-sky-500 py-1.5"
+              className="block text-base font-sans font-semibold text-[var(--text)] hover:text-[var(--accent)] py-2"
             >
               {link.name}
             </a>
           ))}
-          <div className="pt-2 border-t border-slate-100 dark:border-slate-800">
+          <div className="pt-3 border-t border-[var(--border)]">
             <Link
               to="/admin/login"
-              className="block text-center w-full py-2.5 text-xs font-bold text-white bg-sky-600 rounded-xl"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block text-center w-full py-2.5 font-mono text-xs font-semibold text-[var(--accent)] bg-[var(--accent-bg)] border border-[var(--accent-border)]/50 rounded-xl"
             >
-              Admin Dashboard
+              Admin Portal
             </Link>
           </div>
         </div>

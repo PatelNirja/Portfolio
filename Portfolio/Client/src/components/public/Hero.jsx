@@ -1,91 +1,125 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, FileDown, Sparkles, MapPin } from "lucide-react";
+import { ArrowRight, FileDown, Sparkles } from "lucide-react";
+import NodeGraph from "./NodeGraph";
 import { DEFAULT_AVATAR } from "../../utils/constants";
 
 export default function Hero({ profile }) {
+  const name = profile?.name || "Nirja Patel";
+  const tagline = profile?.tagline || "Architecting Distributed Systems & Multi-Agent AI Applications";
+  const bio = profile?.bio || "Passionate about full-stack engineering, clean architecture, and building production-ready AI solutions.";
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.12,
+        delayChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5, ease: "easeOut" },
+    },
+  };
+
   return (
-    <section className="relative min-h-screen pt-32 pb-20 flex items-center justify-center overflow-hidden">
-      {/* Dynamic Background Glow Blobs */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-sky-500/20 dark:bg-sky-500/15 rounded-full blur-3xl -z-10 pointer-events-none" />
-      <div className="absolute top-1/3 right-10 w-72 h-72 bg-indigo-500/20 dark:bg-indigo-500/15 rounded-full blur-3xl -z-10 pointer-events-none" />
+    <section className="relative min-h-screen pt-28 pb-20 flex items-center justify-center overflow-hidden bg-[var(--bg)]">
+      {/* Signature Element — Hero NodeGraph */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+        className="absolute inset-0 z-0"
+      >
+        <NodeGraph />
+      </motion.div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8">
-        {/* Availability Badge */}
-        {profile?.isAvailable && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 text-xs font-bold"
-          >
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping" />
-            <span>Available for New Opportunities</span>
+      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="space-y-6"
+        >
+          {/* Eyebrow & Availability */}
+          <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-center justify-center gap-3">
+            <span className="font-mono text-xs uppercase tracking-widest text-[var(--accent)] font-semibold px-3 py-1 rounded-full bg-[var(--accent-bg)] border border-[var(--accent-border)]/40 inline-flex items-center gap-2">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Multi-Agent AI & Web Architecture</span>
+            </span>
+
+            {profile?.isAvailable && (
+              <span className="font-mono text-xs font-semibold px-3.5 py-1 rounded-full bg-[#6EE7B7]/10 border border-[#6EE7B7]/30 text-[#6EE7B7] inline-flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-[#6EE7B7] animate-pulse" />
+                <span>Available for Hire</span>
+              </span>
+            )}
           </motion.div>
-        )}
 
-        {/* Profile Image */}
-        <motion.div
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="relative inline-block"
-        >
-          <div className="w-32 h-32 sm:w-40 sm:h-40 rounded-full p-1 bg-gradient-to-tr from-sky-500 to-indigo-500 shadow-2xl mx-auto">
-            <img
-              src={profile?.profileImage || DEFAULT_AVATAR}
-              alt={profile?.name || "Profile"}
-              className="w-full h-full object-cover rounded-full bg-slate-900"
-            />
-          </div>
-        </motion.div>
-
-        {/* Name & Tagline */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="space-y-4 max-w-3xl mx-auto"
-        >
-          <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100">
-            Hi, I'm <span className="bg-gradient-to-r from-sky-500 to-indigo-500 bg-clip-text text-transparent">{profile?.name || "Full Stack Developer"}</span>
-          </h1>
-
-          <p className="text-xl sm:text-2xl font-semibold text-slate-700 dark:text-slate-300 leading-snug">
-            {profile?.tagline || "Building Scalable, Modern Web Applications"}
-          </p>
-
-          <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 leading-relaxed max-w-2xl mx-auto">
-            {profile?.bio || "Experienced MERN stack engineer dedicated to creating high-performance web systems."}
-          </p>
-        </motion.div>
-
-        {/* CTA Buttons */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="flex flex-wrap items-center justify-center gap-4 pt-4"
-        >
-          <a
-            href="#projects"
-            className="px-7 py-3.5 rounded-2xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-sm shadow-xl shadow-sky-500/25 flex items-center gap-2 transition-all hover:scale-105"
-          >
-            <span>Explore My Work</span>
-            <ArrowRight className="w-4 h-4" />
-          </a>
-
-          {profile?.resumeUrl && (
-            <a
-              href={profile.resumeUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-7 py-3.5 rounded-2xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-sm flex items-center gap-2 transition-all hover:scale-105"
-            >
-              <FileDown className="w-4 h-4 text-sky-500" />
-              <span>Download Resume</span>
-            </a>
+          {/* Profile Image (Optional accent ring) */}
+          {profile?.profileImage && (
+            <motion.div variants={itemVariants} className="inline-block">
+              <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-full p-1 bg-[var(--surface)] border-2 border-[var(--accent)] shadow-2xl mx-auto overflow-hidden">
+                <img
+                  src={profile.profileImage || DEFAULT_AVATAR}
+                  alt={name}
+                  className="w-full h-full object-cover rounded-full"
+                />
+              </div>
+            </motion.div>
           )}
+
+          {/* Main Headline & Subhead */}
+          <motion.div variants={itemVariants} className="space-y-4 max-w-4xl mx-auto">
+            <h1 className="text-[2.5rem] sm:text-[3.5rem] md:text-[4.25rem] font-heading font-bold tracking-tight text-[var(--text)] leading-[1.1]">
+              Hi, I'm <span className="text-[var(--accent)]">{name}</span>
+            </h1>
+
+            <p className="text-xl sm:text-2xl font-heading font-medium text-[var(--text)]/90 leading-snug max-w-3xl mx-auto">
+              {tagline}
+            </p>
+
+            <p className="text-base text-[var(--text-muted)] font-sans leading-relaxed max-w-2xl mx-auto pt-1">
+              {bio}
+            </p>
+          </motion.div>
+
+          {/* CTAs */}
+          <motion.div
+            variants={itemVariants}
+            className="flex flex-wrap items-center justify-center gap-4 pt-4"
+          >
+            <motion.a
+              href="#projects"
+              whileHover={{ scale: 1.03 }}
+              transition={{ duration: 0.15, ease: "easeOut" }}
+              className="px-7 py-3.5 rounded-xl bg-[var(--accent)] text-[#0D1117] font-semibold text-sm shadow-lg shadow-[var(--accent)]/15 flex items-center gap-2 cursor-pointer font-sans"
+            >
+              <span>Explore Featured Projects</span>
+              <ArrowRight className="w-4 h-4" />
+            </motion.a>
+
+            {profile?.resumeUrl && (
+              <motion.a
+                href={profile.resumeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.03 }}
+                transition={{ duration: 0.15, ease: "easeOut" }}
+                className="px-7 py-3.5 rounded-xl bg-[var(--surface)] hover:bg-[var(--surface-hover)] border border-[var(--border)] text-[var(--text)] font-semibold text-sm flex items-center gap-2 cursor-pointer font-sans"
+              >
+                <FileDown className="w-4 h-4 text-[var(--accent)]" />
+                <span>Download Resume</span>
+              </motion.a>
+            )}
+          </motion.div>
         </motion.div>
       </div>
     </section>
