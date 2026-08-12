@@ -112,10 +112,10 @@ export default function ExperiencePage() {
 
       <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)} title={editItem ? "Edit Experience" : "Add Experience"}>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <Input label="Company" {...register("company", { required: true })} />
-          <Input label="Role" {...register("role", { required: true })} />
+          <Input label="Company" {...register("company")} />
+          <Input label="Role" {...register("role")} />
           <div className="grid grid-cols-2 gap-4">
-            <Input label="Start Date" type="date" {...register("startDate", { required: true })} />
+            <Input label="Start Date" type="date" {...register("startDate")} />
             <Input label="End Date" type="date" {...register("endDate")} />
           </div>
           <div className="flex items-center gap-2">

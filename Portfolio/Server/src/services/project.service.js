@@ -54,10 +54,11 @@ const getProjectById = async (id) => {
  * Creates a new project. Ensures unique slug by appending timestamp if needed.
  */
 const createProject = async (data) => {
-  let slug = slugify(data.title);
+  const title = data.title && data.title.trim() ? data.title : "Untitled Project";
+  let slug = slugify(title);
   const existing = await Project.findOne({ slug });
   if (existing) slug = `${slug}-${Date.now()}`;
-  return await Project.create({ ...data, slug });
+  return await Project.create({ ...data, title, slug });
 };
 
 const updateProject = async (id, data) => {

@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 
 const certificateSchema = new mongoose.Schema(
   {
-    name: { type: String, required: [true, "Certificate name is required"], trim: true },
-    issuer: { type: String, required: [true, "Issuer is required"], trim: true },
+    name: { type: String, trim: true, default: "" },
+    issuer: { type: String, trim: true, default: "" },
     issueDate: { type: Date },
     expiryDate: { type: Date },
     credentialId: { type: String, trim: true },

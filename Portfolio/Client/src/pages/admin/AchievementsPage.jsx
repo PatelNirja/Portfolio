@@ -103,7 +103,7 @@ export default function AchievementsPage() {
 
       <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)} title={editItem ? "Edit Achievement" : "Add Achievement"}>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <Input label="Title" {...register("title", { required: true })} />
+          <Input label="Title" {...register("title")} />
           <Input label="Description" isTextArea rows={2} {...register("description")} />
           <Input label="Date" type="date" {...register("date")} />
           <Input label="Verification Link" placeholder="https://..." {...register("link")} />

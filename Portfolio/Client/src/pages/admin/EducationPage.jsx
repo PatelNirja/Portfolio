@@ -108,8 +108,8 @@ export default function EducationPage() {
 
       <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)} title={editItem ? "Edit Education" : "Add Education"}>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <Input label="Institution" {...register("institution", { required: true })} />
-          <Input label="Degree" {...register("degree", { required: true })} />
+          <Input label="Institution" {...register("institution")} />
+          <Input label="Degree" {...register("degree")} />
           <Input label="Field of Study" {...register("fieldOfStudy")} />
           <div className="grid grid-cols-2 gap-4">
             <Input label="Start Date" type="date" {...register("startDate")} />

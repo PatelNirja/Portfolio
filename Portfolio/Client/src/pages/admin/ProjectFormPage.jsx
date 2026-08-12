@@ -90,7 +90,7 @@ export default function ProjectFormPage() {
         </button>
 
         <form onSubmit={handleSubmit(onSubmit)} className="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-6">
-          <Input label="Project Title" {...register("title", { required: "Title is required" })} />
+          <Input label="Project Title" {...register("title")} />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div className="space-y-1.5">

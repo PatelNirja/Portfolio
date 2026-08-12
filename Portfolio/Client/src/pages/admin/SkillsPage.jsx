@@ -98,7 +98,7 @@ export default function SkillsPage() {
 
       <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)} title={editSkill ? "Edit Skill" : "Add Skill"}>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <Input label="Skill Name" {...register("name", { required: true })} />
+          <Input label="Skill Name" {...register("name")} />
           <div className="space-y-1.5">
             <label className="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400">
               Category
@@ -115,7 +115,7 @@ export default function SkillsPage() {
               <option value="other">Other</option>
             </select>
           </div>
-          <Input label="Proficiency (%)" type="number" min="0" max="100" {...register("proficiency", { required: true })} />
+          <Input label="Proficiency (%)" type="number" {...register("proficiency")} />
           <div className="flex justify-end gap-3 pt-4 border-t border-slate-100 dark:border-slate-800">
             <Button variant="secondary" size="sm" onClick={() => setModalOpen(false)}>
               Cancel

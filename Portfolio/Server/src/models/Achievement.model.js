@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const achievementSchema = new mongoose.Schema(
   {
-    title: { type: String, required: [true, "Achievement title is required"], trim: true },
+    title: { type: String, trim: true, default: "Untitled Achievement" },
     description: { type: String },
     date: { type: Date },
     icon: { type: String, default: "" },

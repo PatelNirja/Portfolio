@@ -1,7 +1,7 @@
 const Joi = require("joi");
 
 const createProjectSchema = Joi.object({
-  title: Joi.string().min(2).max(100).required().label("Title"),
+  title: Joi.string().max(100).optional().allow("").label("Title"),
   shortDesc: Joi.string().max(300).optional().allow("").label("Short Description"),
   description: Joi.string().optional().allow("").label("Description"),
   thumbnail: Joi.string().uri().optional().allow("").label("Thumbnail"),

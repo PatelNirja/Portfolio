@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const skillSchema = new mongoose.Schema(
   {
-    name: { type: String, required: [true, "Skill name is required"], trim: true },
+    name: { type: String, trim: true, default: "" },
     category: {
       type: String,
       enum: ["frontend", "backend", "devops", "database", "tools", "other"],

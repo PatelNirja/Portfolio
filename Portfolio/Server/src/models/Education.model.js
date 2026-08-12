@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 
 const educationSchema = new mongoose.Schema(
   {
-    institution: { type: String, required: [true, "Institution is required"], trim: true },
-    degree: { type: String, required: [true, "Degree is required"], trim: true },
+    institution: { type: String, trim: true, default: "" },
+    degree: { type: String, trim: true, default: "" },
     fieldOfStudy: { type: String, trim: true },
     startDate: { type: Date },
     endDate: { type: Date },

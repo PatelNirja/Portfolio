@@ -3,7 +3,7 @@ const slugify = require("../utils/slugify");
 
 const projectSchema = new mongoose.Schema(
   {
-    title: { type: String, required: [true, "Project title is required"], trim: true },
+    title: { type: String, trim: true, default: "Untitled Project" },
     slug: { type: String, unique: true, lowercase: true },
     shortDesc: { type: String, trim: true },
     description: { type: String },
@@ -34,7 +34,7 @@ const projectSchema = new mongoose.Schema(
 // Auto-generate slug from title before saving
 projectSchema.pre("save", function () {
   if (this.isModified("title") || this.isNew) {
-    this.slug = slugify(this.title);
+    this.slug = slugify(this.title || `project-${Date.now()}`);
   }
 });
 

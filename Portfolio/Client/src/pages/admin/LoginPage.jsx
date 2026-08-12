@@ -61,7 +61,7 @@ export default function LoginPage() {
               type="email"
               placeholder="admin@portfolio.com"
               error={errors.email?.message}
-              {...register("email", { required: "Email is required" })}
+              {...register("email")}
             />
 
             <Input
@@ -69,7 +69,7 @@ export default function LoginPage() {
               type="password"
               placeholder="••••••••"
               error={errors.password?.message}
-              {...register("password", { required: "Password is required" })}
+              {...register("password")}
             />
 
             <Button type="submit" isLoading={isSubmitting} icon={LogIn} className="w-full py-3">

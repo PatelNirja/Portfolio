@@ -105,8 +105,8 @@ export default function CertificatesPage() {
 
       <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)} title={editItem ? "Edit Certificate" : "Add Certificate"}>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <Input label="Certificate Name" {...register("name", { required: true })} />
-          <Input label="Issuer" {...register("issuer", { required: true })} />
+          <Input label="Certificate Name" {...register("name")} />
+          <Input label="Issuer" {...register("issuer")} />
           <Input label="Issue Date" type="date" {...register("issueDate")} />
           <Input label="Credential ID" {...register("credentialId")} />
           <Input label="Credential URL" placeholder="https://..." {...register("credentialUrl")} />

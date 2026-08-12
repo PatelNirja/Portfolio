@@ -4,7 +4,8 @@
  * @returns {string} Slugified string.
  */
 const slugify = (text) => {
-  return text
+  if (!text) return `item-${Date.now()}`;
+  const slug = text
     .toString()
     .toLowerCase()
     .trim()
@@ -13,6 +14,7 @@ const slugify = (text) => {
     .replace(/\-\-+/g, "-")      // collapse multiple hyphens
     .replace(/^-+/, "")          // trim leading hyphens
     .replace(/-+$/, "");         // trim trailing hyphens
+  return slug || `item-${Date.now()}`;
 };
 
 module.exports = slugify;
