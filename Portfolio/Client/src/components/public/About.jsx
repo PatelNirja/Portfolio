@@ -1,57 +1,100 @@
-import React from "react";
-import { motion } from "framer-motion";
-import { MapPin, Mail, Sparkles, Cpu, Layers } from "lucide-react";
+import React, { useEffect, useRef } from "react";
+import { MapPin, Mail, Cpu } from "lucide-react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function About({ profile }) {
+  const sectionRef = useRef(null);
+  const headlineRef = useRef(null);
+  const cardsRef = useRef([]);
+
+  useEffect(() => {
+    if (!profile) return;
+
+    const ctx = gsap.context(() => {
+      // Headline animation
+      gsap.from(headlineRef.current, {
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+        },
+        y: 40,
+        opacity: 0,
+        duration: 0.8,
+        ease: "power3.out",
+      });
+
+      // Cards staggered animation
+      gsap.from(cardsRef.current, {
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 70%",
+        },
+        y: 60,
+        opacity: 0,
+        duration: 0.8,
+        stagger: 0.15,
+        ease: "power3.out",
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, [profile]);
+
   if (!profile) return null;
 
   return (
-    <section id="about" className="py-24 bg-[var(--bg)] border-t border-[var(--border)]">
-      <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16"
-      >
-        <div className="text-center space-y-3">
-          <span className="font-mono text-xs uppercase tracking-widest text-[var(--accent)] font-semibold">
-            // About Me
+    <section id="about" ref={sectionRef} className="py-32 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+        
+        <div ref={headlineRef} className="text-center space-y-4">
+          <span className="font-sans text-xs uppercase tracking-[0.2em] font-bold text-[var(--color-accent)] text-glow">
+            About Me
           </span>
-          <h2 className="text-[2.25rem] font-heading font-bold text-[var(--text)] leading-tight">
+          <h2 className="text-4xl md:text-5xl font-display font-bold text-[var(--color-text-main)] leading-tight max-w-4xl mx-auto">
             Engineering High-Performance Web & AI Systems
           </h2>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
           {/* Left Column: Details */}
-          <div className="lg:col-span-7 space-y-6 flex flex-col justify-between p-8 rounded-2xl bg-[var(--surface)] border border-[var(--border)]">
-            <div className="space-y-4">
-              <h3 className="text-xl font-heading font-bold text-[var(--text)]">
+          <div 
+            ref={(el) => (cardsRef.current[0] = el)} 
+            className="lg:col-span-7 space-y-8 flex flex-col justify-between p-10 rounded-3xl glass border border-[var(--color-surface-border)]"
+          >
+            <div className="space-y-6">
+              <h3 className="text-2xl font-display font-bold text-[var(--color-text-main)] leading-snug">
                 Building resilient software architecture with clean, scalable code.
               </h3>
-              <p className="text-[var(--text-muted)] font-sans leading-[1.6] text-base">
+              <p className="text-[var(--color-text-muted)] font-sans leading-relaxed text-lg">
                 {profile.bio || "Full stack software engineer specializing in scalable React interfaces, Node.js microservices, and AI-driven architectures."}
               </p>
             </div>
 
             {/* Quick Meta Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-[var(--border)]">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-6 border-t border-[var(--color-surface-border)]/50">
               {profile.location && (
-                <div className="flex items-center gap-3.5 p-3.5 rounded-xl bg-[var(--bg)] border border-[var(--border)]">
-                  <MapPin className="w-5 h-5 text-[var(--accent)] shrink-0" />
+                <div className="flex items-center gap-4 p-4 rounded-2xl bg-[var(--color-surface)]/40 border border-[var(--color-surface-border)] transition-colors hover:bg-[var(--color-surface-hover)]">
+                  <div className="p-2.5 rounded-xl bg-[var(--color-accent-muted)] text-[var(--color-accent)]">
+                    <MapPin className="w-5 h-5" />
+                  </div>
                   <div>
-                    <span className="font-mono text-[10px] uppercase font-bold text-[var(--text-muted)] block">Location</span>
-                    <p className="text-sm font-semibold text-[var(--text)]">{profile.location}</p>
+                    <span className="font-sans text-[11px] uppercase tracking-wider font-bold text-[var(--color-text-muted)] block">Location</span>
+                    <p className="text-base font-semibold text-[var(--color-text-main)]">{profile.location}</p>
                   </div>
                 </div>
               )}
 
               {profile.email && (
-                <div className="flex items-center gap-3.5 p-3.5 rounded-xl bg-[var(--bg)] border border-[var(--border)]">
-                  <Mail className="w-5 h-5 text-[var(--accent)] shrink-0" />
-                  <div>
-                    <span className="font-mono text-[10px] uppercase font-bold text-[var(--text-muted)] block">Email</span>
-                    <p className="text-sm font-semibold text-[var(--text)] truncate">{profile.email}</p>
+                <div className="flex items-center gap-4 p-4 rounded-2xl bg-[var(--color-surface)]/40 border border-[var(--color-surface-border)] transition-colors hover:bg-[var(--color-surface-hover)]">
+                  <div className="p-2.5 rounded-xl bg-[var(--color-accent-muted)] text-[var(--color-accent)]">
+                    <Mail className="w-5 h-5" />
+                  </div>
+                  <div className="overflow-hidden">
+                    <span className="font-sans text-[11px] uppercase tracking-wider font-bold text-[var(--color-text-muted)] block">Email</span>
+                    <p className="text-base font-semibold text-[var(--color-text-main)] truncate">{profile.email}</p>
                   </div>
                 </div>
               )}
@@ -59,34 +102,39 @@ export default function About({ profile }) {
           </div>
 
           {/* Right Column: Visual Card */}
-          <div className="lg:col-span-5 p-8 rounded-2xl bg-[var(--surface)] border border-[var(--border)] flex flex-col justify-between space-y-6">
-            <div className="space-y-4">
-              <div className="flex items-center gap-2 text-[var(--accent-2)]">
-                <Cpu className="w-5 h-5" />
-                <h4 className="font-heading font-bold text-lg text-[var(--text)]">Core Architecture Principles</h4>
+          <div 
+            ref={(el) => (cardsRef.current[1] = el)}
+            className="lg:col-span-5 p-10 rounded-3xl glass-card flex flex-col justify-between space-y-8"
+          >
+            <div className="space-y-6">
+              <div className="flex items-center gap-3 text-[var(--color-accent)]">
+                <div className="p-2 rounded-lg bg-[var(--color-accent-muted)]">
+                  <Cpu className="w-5 h-5" />
+                </div>
+                <h4 className="font-display font-bold text-xl text-[var(--color-text-main)]">Core Principles</h4>
               </div>
-              <ul className="space-y-3.5 text-sm font-sans text-[var(--text-muted)]">
-                <li className="flex items-start gap-3">
-                  <span className="w-2 h-2 rounded-full bg-[var(--accent)] mt-2 shrink-0" />
-                  <span><strong>Multi-Agent AI Integration:</strong> Orchestrating specialized agent networks (FarmXpert, CUDAS RAG pipelines).</span>
+              <ul className="space-y-5 text-base font-sans text-[var(--color-text-muted)]">
+                <li className="flex items-start gap-4">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)] mt-2.5 shrink-0 shadow-[0_0_8px_var(--color-accent)]" />
+                  <span><strong className="text-[var(--color-text-main)] font-semibold">Multi-Agent AI Integration:</strong> Orchestrating specialized agent networks for complex workflows.</span>
                 </li>
-                <li className="flex items-start gap-3">
-                  <span className="w-2 h-2 rounded-full bg-[var(--accent-2)] mt-2 shrink-0" />
-                  <span><strong>Modern MERN Stack:</strong> React 19, Node.js, Express, MongoDB with stateless JWT authentication.</span>
+                <li className="flex items-start gap-4">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-text-main)] mt-2.5 shrink-0" />
+                  <span><strong className="text-[var(--color-text-main)] font-semibold">Modern MERN Stack:</strong> React 19, Node.js, Express, MongoDB with stateless JWT authentication.</span>
                 </li>
-                <li className="flex items-start gap-3">
-                  <span className="w-2 h-2 rounded-full bg-[var(--accent)] mt-2 shrink-0" />
-                  <span><strong>High-Performance UI:</strong> Framer Motion physics, Tailwind CSS tokens, & responsive layout baselines.</span>
+                <li className="flex items-start gap-4">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-accent)] mt-2.5 shrink-0 shadow-[0_0_8px_var(--color-accent)]" />
+                  <span><strong className="text-[var(--color-text-main)] font-semibold">High-Performance UI:</strong> Framer Motion physics, Tailwind CSS tokens, & responsive layout baselines.</span>
                 </li>
-                <li className="flex items-start gap-3">
-                  <span className="w-2 h-2 rounded-full bg-[var(--accent-2)] mt-2 shrink-0" />
-                  <span><strong>Clean Code & Security:</strong> Strict state isolation, rate limiting, and defensive input validation.</span>
+                <li className="flex items-start gap-4">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-text-main)] mt-2.5 shrink-0" />
+                  <span><strong className="text-[var(--color-text-main)] font-semibold">Clean Code & Security:</strong> Strict state isolation, rate limiting, and defensive input validation.</span>
                 </li>
               </ul>
             </div>
           </div>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 }

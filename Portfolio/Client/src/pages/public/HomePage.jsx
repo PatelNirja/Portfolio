@@ -88,25 +88,29 @@ export default function HomePage() {
   return (
     <>
       <SEO
-        title={profile?.name ? `${profile.name} — Portfolio` : "Portfolio CMS"}
+        title={profile?.name ? `${profile.name} — Portfolio` : "Portfolio"}
         description={profile?.tagline || "Full Stack Web Portfolio"}
       />
-      <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-[#0b0f19] text-slate-900 dark:text-slate-100 selection:bg-sky-500 selection:text-white">
+      <div className="bg-noise"></div>
+      <div className="relative min-h-screen flex flex-col bg-[var(--color-background)] text-[var(--color-text-main)] selection:bg-[var(--color-accent)] selection:text-[#0B0D10]">
         <Navbar profile={profile} />
 
-        <main className="flex-1">
+        <main className="flex-1 relative z-10">
           <Hero profile={profile} />
           <About profile={profile} />
           <Skills skills={skills} />
 
           {/* Projects Section */}
-          <section id="projects" className="py-24 bg-white/50 dark:bg-slate-900/50 backdrop-blur-md">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="text-center space-y-2 mb-12">
-                <h2 className="text-xs font-extrabold uppercase tracking-widest text-sky-600 dark:text-sky-400">
-                  Featured Work
+          <section id="projects" className="py-24 relative overflow-hidden">
+            {/* Subtle background glow for projects section */}
+            <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-surface)]/20 to-[var(--color-background)] pointer-events-none"></div>
+            
+            <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="text-center space-y-4 mb-16">
+                <h2 className="text-sm font-sans font-bold uppercase tracking-[0.2em] text-[var(--color-accent)] text-glow">
+                  Selected Work
                 </h2>
-                <p className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-slate-100">
+                <p className="text-4xl sm:text-5xl font-bold font-display text-[var(--color-text-main)]">
                   Projects & Applications
                 </p>
               </div>

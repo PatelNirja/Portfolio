@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { ArrowRight, FileDown, Sparkles } from "lucide-react";
-import NodeGraph from "./NodeGraph";
+import HeroBackground from "./HeroBackground";
 import { DEFAULT_AVATAR } from "../../utils/constants";
 
 export default function Hero({ profile }) {
@@ -14,95 +14,90 @@ export default function Hero({ profile }) {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.12,
-        delayChildren: 0.1,
+        staggerChildren: 0.15,
+        delayChildren: 0.2,
       },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 30 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.5, ease: "easeOut" },
+      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
     },
   };
 
   return (
-    <section className="relative min-h-screen pt-28 pb-20 flex items-center justify-center overflow-hidden bg-[var(--bg)]">
-      {/* Signature Element — Hero NodeGraph */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-        className="absolute inset-0 z-0"
-      >
-        <NodeGraph />
-      </motion.div>
+    <section className="relative min-h-screen pt-28 pb-20 flex items-center justify-center overflow-hidden">
+      {/* 3D Particle Field Background */}
+      <HeroBackground />
 
-      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8">
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-8">
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="space-y-6"
+          className="space-y-8"
         >
           {/* Eyebrow & Availability */}
-          <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-center justify-center gap-3">
-            <span className="font-mono text-xs uppercase tracking-widest text-[var(--accent)] font-semibold px-3 py-1 rounded-full bg-[var(--accent-bg)] border border-[var(--accent-border)]/40 inline-flex items-center gap-2">
+          <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <span className="font-sans text-xs uppercase tracking-[0.2em] font-semibold px-4 py-1.5 rounded-full bg-[var(--color-surface)] border border-[var(--color-surface-border)] text-glow text-[var(--color-accent)] inline-flex items-center gap-2">
               <Sparkles className="w-3.5 h-3.5" />
-              <span>Multi-Agent AI & Web Architecture</span>
+              <span>Premium Web Architecture</span>
             </span>
 
             {profile?.isAvailable && (
-              <span className="font-mono text-xs font-semibold px-3.5 py-1 rounded-full bg-[#6EE7B7]/10 border border-[#6EE7B7]/30 text-[#6EE7B7] inline-flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-[#6EE7B7] animate-pulse" />
+              <span className="font-sans text-xs font-semibold px-4 py-1.5 rounded-full bg-[var(--color-accent-muted)] border border-[var(--color-accent)]/30 text-[var(--color-accent)] inline-flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-[var(--color-accent)] animate-pulse shadow-[0_0_8px_var(--color-accent)]" />
                 <span>Available for Hire</span>
               </span>
             )}
           </motion.div>
 
-          {/* Profile Image (Optional accent ring) */}
+          {/* Main Headline & Subhead */}
+          <motion.div variants={itemVariants} className="space-y-6 max-w-5xl mx-auto">
+            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-bold tracking-tight leading-[1.05]">
+              Hello, I'm <span className="text-[var(--color-accent)] text-glow">{name}</span>
+            </h1>
+
+            <p className="text-2xl sm:text-3xl font-medium text-[var(--color-text-main)]/90 leading-tight max-w-4xl mx-auto">
+              {tagline}
+            </p>
+
+            <p className="text-lg text-[var(--color-text-muted)] font-sans leading-relaxed max-w-2xl mx-auto pt-2">
+              {bio}
+            </p>
+          </motion.div>
+
+          {/* Profile Image */}
           {profile?.profileImage && (
-            <motion.div variants={itemVariants} className="inline-block">
-              <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-full p-1 bg-[var(--surface)] border-2 border-[var(--accent)] shadow-2xl mx-auto overflow-hidden">
+            <motion.div variants={itemVariants} className="inline-block mt-4">
+              <div className="w-32 h-32 sm:w-40 sm:h-40 rounded-full p-1.5 glass-card overflow-hidden relative group">
+                <div className="absolute inset-0 rounded-full border-2 border-transparent group-hover:border-[var(--color-accent)] transition-colors duration-500 z-20 pointer-events-none"></div>
                 <img
                   src={profile.profileImage || DEFAULT_AVATAR}
                   alt={name}
-                  className="w-full h-full object-cover rounded-full"
+                  className="w-full h-full object-cover rounded-full filter grayscale hover:grayscale-0 transition-all duration-500 z-10 relative"
                 />
               </div>
             </motion.div>
           )}
 
-          {/* Main Headline & Subhead */}
-          <motion.div variants={itemVariants} className="space-y-4 max-w-4xl mx-auto">
-            <h1 className="text-[2.5rem] sm:text-[3.5rem] md:text-[4.25rem] font-heading font-bold tracking-tight text-[var(--text)] leading-[1.1]">
-              Hi, I'm <span className="text-[var(--accent)]">{name}</span>
-            </h1>
-
-            <p className="text-xl sm:text-2xl font-heading font-medium text-[var(--text)]/90 leading-snug max-w-3xl mx-auto">
-              {tagline}
-            </p>
-
-            <p className="text-base text-[var(--text-muted)] font-sans leading-relaxed max-w-2xl mx-auto pt-1">
-              {bio}
-            </p>
-          </motion.div>
-
           {/* CTAs */}
           <motion.div
             variants={itemVariants}
-            className="flex flex-wrap items-center justify-center gap-4 pt-4"
+            className="flex flex-wrap items-center justify-center gap-5 pt-8"
           >
             <motion.a
               href="#projects"
-              whileHover={{ scale: 1.03 }}
-              transition={{ duration: 0.15, ease: "easeOut" }}
-              className="px-7 py-3.5 rounded-xl bg-[var(--accent)] text-[#0D1117] font-semibold text-sm shadow-lg shadow-[var(--accent)]/15 flex items-center gap-2 cursor-pointer font-sans"
+              whileHover={{ scale: 1.05, y: -2 }}
+              whileTap={{ scale: 0.95 }}
+              transition={{ duration: 0.2 }}
+              className="px-8 py-4 rounded-xl bg-[var(--color-accent)] text-[#0B0D10] font-bold text-sm shadow-[0_0_20px_var(--color-accent-muted)] flex items-center gap-2 cursor-pointer font-sans transition-shadow hover:shadow-[0_0_30px_rgba(212,255,51,0.4)]"
             >
-              <span>Explore Featured Projects</span>
+              <span>Explore Featured Work</span>
               <ArrowRight className="w-4 h-4" />
             </motion.a>
 
@@ -111,12 +106,13 @@ export default function Hero({ profile }) {
                 href={profile.resumeUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                whileHover={{ scale: 1.03 }}
-                transition={{ duration: 0.15, ease: "easeOut" }}
-                className="px-7 py-3.5 rounded-xl bg-[var(--surface)] hover:bg-[var(--surface-hover)] border border-[var(--border)] text-[var(--text)] font-semibold text-sm flex items-center gap-2 cursor-pointer font-sans"
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ duration: 0.2 }}
+                className="px-8 py-4 rounded-xl glass hover:bg-[var(--color-surface-hover)] border border-[var(--color-surface-border)] text-[var(--color-text-main)] font-semibold text-sm flex items-center gap-2 cursor-pointer font-sans transition-colors"
               >
-                <FileDown className="w-4 h-4 text-[var(--accent)]" />
-                <span>Download Resume</span>
+                <FileDown className="w-4 h-4 text-[var(--color-accent)]" />
+                <span>Download CV</span>
               </motion.a>
             )}
           </motion.div>

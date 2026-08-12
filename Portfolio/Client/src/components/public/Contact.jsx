@@ -5,7 +5,7 @@ import { messagesApi } from "../../api/messagesApi";
 import Input from "../common/Input";
 import Button from "../common/Button";
 import Toast from "../common/Toast";
-import { Send, Mail, MapPin, CheckCircle2 } from "lucide-react";
+import { Send, Mail, MapPin } from "lucide-react";
 
 export default function Contact({ profile }) {
   const {
@@ -38,20 +38,20 @@ export default function Contact({ profile }) {
   };
 
   return (
-    <section id="contact" className="py-24 bg-white/50 dark:bg-slate-900/50 backdrop-blur-md">
+    <section id="contact" className="py-32 relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center space-y-2 mb-16"
+          className="text-center space-y-4 mb-20"
         >
-          <h2 className="text-xs font-extrabold uppercase tracking-widest text-sky-600 dark:text-sky-400">
+          <span className="font-sans text-xs uppercase tracking-[0.2em] font-bold text-[var(--color-accent)] text-glow">
             Get In Touch
-          </h2>
-          <p className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-slate-100">
+          </span>
+          <h2 className="text-4xl md:text-5xl font-display font-bold text-[var(--color-text-main)] leading-tight max-w-2xl mx-auto">
             Let's Build Something Together
-          </p>
+          </h2>
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
@@ -60,36 +60,36 @@ export default function Contact({ profile }) {
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="lg:col-span-5 space-y-6"
+            className="lg:col-span-5 space-y-8"
           >
-            <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100">
+            <h3 className="text-3xl font-display font-bold text-[var(--color-text-main)] leading-tight">
               Have a project in mind or want to collaborate?
             </h3>
-            <p className="text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+            <p className="text-lg text-[var(--color-text-muted)] font-sans leading-relaxed">
               Fill out the contact form and I'll get back to you as soon as possible.
             </p>
 
-            <div className="space-y-4 pt-4">
+            <div className="space-y-5 pt-6">
               {profile?.email && (
-                <div className="flex items-center gap-4 p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
-                  <div className="p-3 rounded-xl bg-sky-50 dark:bg-sky-950/50 text-sky-500">
-                    <Mail className="w-5 h-5" />
+                <div className="flex items-center gap-5 p-5 rounded-3xl glass border border-[var(--color-surface-border)] group hover:bg-[var(--color-surface-hover)] transition-colors">
+                  <div className="p-3.5 rounded-2xl bg-[var(--color-accent-muted)] text-[var(--color-accent)] group-hover:shadow-[0_0_15px_var(--color-accent-muted)] transition-all">
+                    <Mail className="w-6 h-6" />
                   </div>
                   <div>
-                    <span className="text-[10px] uppercase font-bold text-slate-400">Email Me</span>
-                    <p className="text-sm font-semibold text-slate-800 dark:text-slate-200">{profile.email}</p>
+                    <span className="text-[11px] font-sans uppercase font-bold tracking-widest text-[var(--color-text-muted)] block mb-1">Email Me</span>
+                    <p className="text-base font-semibold text-[var(--color-text-main)]">{profile.email}</p>
                   </div>
                 </div>
               )}
 
               {profile?.location && (
-                <div className="flex items-center gap-4 p-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
-                  <div className="p-3 rounded-xl bg-sky-50 dark:bg-sky-950/50 text-sky-500">
-                    <MapPin className="w-5 h-5" />
+                <div className="flex items-center gap-5 p-5 rounded-3xl glass border border-[var(--color-surface-border)] group hover:bg-[var(--color-surface-hover)] transition-colors">
+                  <div className="p-3.5 rounded-2xl bg-[var(--color-accent-muted)] text-[var(--color-accent)] group-hover:shadow-[0_0_15px_var(--color-accent-muted)] transition-all">
+                    <MapPin className="w-6 h-6" />
                   </div>
                   <div>
-                    <span className="text-[10px] uppercase font-bold text-slate-400">Location</span>
-                    <p className="text-sm font-semibold text-slate-800 dark:text-slate-200">{profile.location}</p>
+                    <span className="text-[11px] font-sans uppercase font-bold tracking-widest text-[var(--color-text-muted)] block mb-1">Location</span>
+                    <p className="text-base font-semibold text-[var(--color-text-main)]">{profile.location}</p>
                   </div>
                 </div>
               )}
@@ -105,9 +105,9 @@ export default function Contact({ profile }) {
           >
             <form
               onSubmit={handleSubmit(onSubmit)}
-              className="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-xl space-y-6"
+              className="p-10 rounded-[2rem] glass-card space-y-8"
             >
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                 <Input
                   label="Your Name"
                   placeholder="John Doe"
@@ -136,7 +136,7 @@ export default function Contact({ profile }) {
               <Input
                 label="Message"
                 isTextArea
-                rows={5}
+                rows={6}
                 placeholder="Hi, I'd like to discuss a project..."
                 error={errors.message?.message}
                 {...register("message", {
@@ -145,7 +145,7 @@ export default function Contact({ profile }) {
                 })}
               />
 
-              <Button type="submit" isLoading={isSubmitting} icon={Send} className="w-full py-3.5">
+              <Button type="submit" isLoading={isSubmitting} icon={Send} className="w-full py-4 text-base font-bold tracking-wide">
                 Send Message
               </Button>
             </form>
