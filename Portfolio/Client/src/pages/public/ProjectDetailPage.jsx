@@ -7,7 +7,7 @@ import Spinner from "../../components/common/Spinner";
 import SEO from "../../components/common/SEO";
 import { projectsApi } from "../../api/projectsApi";
 import { profileApi } from "../../api/profileApi";
-import { ArrowLeft, ExternalLink, Calendar, Tag } from "lucide-react";
+import { ArrowLeft, ExternalLink, Calendar } from "lucide-react";
 import { FaGithub as Github } from "react-icons/fa";
 import { DEFAULT_PROJECT_THUMB } from "../../utils/constants";
 import { formatDate } from "../../utils/formatDate";
@@ -42,18 +42,18 @@ export default function ProjectDetailPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-[#0b0f19]">
-        <Spinner size="lg" className="text-sky-500" />
+      <div className="min-h-screen flex items-center justify-center bg-[var(--color-background)]">
+        <Spinner size="lg" className="text-[var(--color-accent)]" />
       </div>
     );
   }
 
   if (error || !project) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-slate-50 dark:bg-[#0b0f19] text-center space-y-4">
-        <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-200">Project Not Found</h2>
-        <p className="text-sm text-slate-500 max-w-sm">The project you are looking for does not exist or has been removed.</p>
-        <Link to="/" className="px-5 py-2.5 bg-sky-600 text-white rounded-xl font-semibold text-xs">
+      <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-[var(--color-background)] text-center space-y-6">
+        <h2 className="text-3xl font-display font-bold text-[var(--color-text-main)]">Project Not Found</h2>
+        <p className="text-sm font-sans text-[var(--color-text-muted)] max-w-sm">The project you are looking for does not exist or has been removed.</p>
+        <Link to="/" className="px-6 py-3 bg-[var(--color-accent)] text-[var(--color-background)] rounded-xl font-sans font-bold text-sm shadow-[0_0_15px_var(--color-accent-muted)] hover:bg-[var(--color-accent-hover)] transition-all">
           Return to Home Page
         </Link>
       </div>
@@ -63,14 +63,15 @@ export default function ProjectDetailPage() {
   return (
     <>
       <SEO title={project.title} description={project.shortDesc} image={project.thumbnail} />
-      <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-[#0b0f19] text-slate-900 dark:text-slate-100">
+      <div className="bg-noise"></div>
+      <div className="min-h-screen flex flex-col bg-[var(--color-background)] text-[var(--color-text-main)]">
         <Navbar profile={profile} />
 
-        <main className="flex-1 pt-28 pb-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 w-full space-y-8">
+        <main className="flex-1 pt-28 pb-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 w-full space-y-10 relative z-10">
           {/* Back Button */}
           <Link
             to="/"
-            className="inline-flex items-center gap-2 text-xs font-bold text-slate-500 hover:text-sky-500 transition-colors"
+            className="inline-flex items-center gap-2 text-xs font-sans font-bold text-[var(--color-text-muted)] hover:text-[var(--color-accent)] transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Back to Portfolio</span>
@@ -79,25 +80,25 @@ export default function ProjectDetailPage() {
           {/* Header Info */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <span className="px-3 py-1 rounded-full text-xs font-extrabold uppercase tracking-wider bg-sky-500/10 text-sky-500 border border-sky-500/20">
+              <span className="px-3.5 py-1.5 rounded-full text-xs font-sans font-bold uppercase tracking-wider bg-[var(--color-accent-muted)] text-[var(--color-accent)] border border-[var(--color-accent)]/30">
                 {project.category}
               </span>
-              <span className="text-xs font-semibold text-slate-400">
+              <span className="text-xs font-mono font-medium text-[var(--color-text-muted)]">
                 Created {formatDate(project.createdAt)}
               </span>
             </div>
 
-            <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100">
+            <h1 className="text-3xl sm:text-5xl font-display font-bold text-[var(--color-text-main)] leading-tight">
               {project.title}
             </h1>
 
-            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl">
+            <p className="text-base sm:text-lg text-[var(--color-text-muted)] font-sans leading-relaxed max-w-3xl">
               {project.shortDesc}
             </p>
           </div>
 
           {/* Featured Image */}
-          <div className="relative rounded-3xl overflow-hidden shadow-2xl border border-slate-200 dark:border-slate-800 bg-slate-900 max-h-[500px]">
+          <div className="relative rounded-3xl overflow-hidden glass-card max-h-[500px]">
             <img
               src={project.thumbnail || DEFAULT_PROJECT_THUMB}
               alt={project.title}
@@ -106,18 +107,18 @@ export default function ProjectDetailPage() {
           </div>
 
           {/* Action Links & Tech Badges */}
-          <div className="flex flex-wrap items-center justify-between gap-6 p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+          <div className="flex flex-wrap items-center justify-between gap-6 p-8 rounded-3xl glass-card">
             {/* Tech stack */}
             {project.techStack && project.techStack.length > 0 && (
-              <div className="space-y-1.5">
-                <span className="text-[10px] uppercase font-extrabold tracking-wider text-slate-400">
+              <div className="space-y-2">
+                <span className="text-[11px] uppercase font-sans font-bold tracking-widest text-[var(--color-text-muted)] block">
                   Technologies Used
                 </span>
                 <div className="flex flex-wrap gap-2">
                   {project.techStack.map((tech, idx) => (
                     <span
                       key={idx}
-                      className="px-3 py-1 rounded-xl text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300"
+                      className="px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-[var(--color-surface)] border border-[var(--color-surface-border)] text-[var(--color-text-main)]"
                     >
                       {tech}
                     </span>
@@ -133,7 +134,7 @@ export default function ProjectDetailPage() {
                   href={project.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-5 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs flex items-center gap-2 transition-all"
+                  className="px-6 py-3 rounded-xl glass border border-[var(--color-surface-border)] hover:bg-[var(--color-surface-hover)] text-[var(--color-text-main)] font-sans font-bold text-xs flex items-center gap-2 transition-all"
                 >
                   <Github className="w-4 h-4" />
                   <span>GitHub Repository</span>
@@ -144,7 +145,7 @@ export default function ProjectDetailPage() {
                   href={project.liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-5 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs shadow-lg shadow-sky-500/25 flex items-center gap-2 transition-all"
+                  className="px-6 py-3 rounded-xl bg-[var(--color-accent)] hover:bg-[var(--color-accent-hover)] text-[var(--color-background)] font-sans font-bold text-xs shadow-[0_0_15px_var(--color-accent-muted)] flex items-center gap-2 transition-all"
                 >
                   <ExternalLink className="w-4 h-4" />
                   <span>Live Project Demo</span>
@@ -155,9 +156,9 @@ export default function ProjectDetailPage() {
 
           {/* Full Description */}
           {project.description && (
-            <div className="p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
-              <h2 className="text-xl font-bold text-slate-900 dark:text-slate-100">Project Breakdown</h2>
-              <div className="prose dark:prose-invert max-w-none text-sm text-slate-600 dark:text-slate-300 leading-relaxed whitespace-pre-wrap">
+            <div className="p-8 sm:p-10 rounded-3xl glass-card space-y-6">
+              <h2 className="text-2xl font-display font-bold text-[var(--color-text-main)]">Project Breakdown</h2>
+              <div className="text-base text-[var(--color-text-muted)] font-sans leading-relaxed whitespace-pre-wrap">
                 {project.description}
               </div>
             </div>

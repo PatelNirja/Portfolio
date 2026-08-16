@@ -1,30 +1,51 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;900&display=swap');
 @import "tailwindcss";
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   DESIGN SYSTEM TOKENS — Single source of truth for the entire site
+   ═══════════════════════════════════════════════════════════════════════════ */
 @theme {
-  --color-primary-50: #f4f6f8;
-  
-  /* Backgrounds */
-  --color-background: #0B0D10;
-  --color-surface: #12151A;
-  --color-surface-hover: #1A1E24;
-  --color-surface-border: #2A2E35;
-  
-  /* Accents */
-  --color-accent: #D4FF33;
-  --color-accent-muted: rgba(212, 255, 51, 0.2);
-  --color-accent-hover: #E3FF66;
-  
-  /* Typography Colors */
-  --color-text-main: #F2F4F7;
-  --color-text-muted: #94A3B8;
+  /* ─── Backgrounds ─── */
+  --color-background: #0A0C10;
+  --color-surface: #111318;
+  --color-surface-hover: #191D24;
+  --color-surface-border: #252A33;
+  --color-surface-elevated: #1E222A;
 
-  /* Typography Fonts */
+  /* ─── Primary Accent — Violet ─── */
+  --color-accent: #A78BFA;
+  --color-accent-muted: rgba(167, 139, 250, 0.15);
+  --color-accent-hover: #C4B5FD;
+  --color-accent-glow: rgba(167, 139, 250, 0.35);
+
+  /* ─── Secondary Accent — Emerald ─── */
+  --color-accent-secondary: #34D399;
+  --color-accent-secondary-muted: rgba(52, 211, 153, 0.15);
+
+  /* ─── Typography Colors ─── */
+  --color-text-main: #F0F2F5;
+  --color-text-muted: #7C8899;
+
+  /* ─── Semantic ─── */
+  --color-danger: #F87171;
+  --color-danger-muted: rgba(248, 113, 113, 0.15);
+  --color-success: #34D399;
+  --color-success-muted: rgba(52, 211, 153, 0.15);
+
+  /* ─── Typography Fonts ─── */
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
   --font-display: 'Outfit', system-ui, -apple-system, sans-serif;
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   BASE STYLES
+   ═══════════════════════════════════════════════════════════════════════════ */
 @layer base {
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
   body {
     background-color: var(--color-background);
     color: var(--color-text-main);
@@ -37,25 +58,54 @@
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
     font-weight: 700;
+    line-height: 1.15;
+  }
+
+  /* Selection highlight */
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-background);
   }
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   UTILITY CLASSES
+   ═══════════════════════════════════════════════════════════════════════════ */
 @layer utilities {
+  /* ─── Glass Surfaces ─── */
   .glass {
-    background: rgba(18, 21, 26, 0.6);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--color-surface-border);
-  }
-  
-  .glass-card {
-    background: linear-gradient(145deg, rgba(26, 30, 36, 0.8) 0%, rgba(18, 21, 26, 0.8) 100%);
+    background: rgba(17, 19, 24, 0.6);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--color-surface-border);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
   }
-  
+
+  .glass-card {
+    background: linear-gradient(
+      145deg,
+      rgba(25, 29, 36, 0.85) 0%,
+      rgba(17, 19, 24, 0.85) 100%
+    );
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--color-surface-border);
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.3),
+      0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+  }
+
+  .glass-card-hover {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  .glass-card-hover:hover {
+    border-color: rgba(167, 139, 250, 0.25);
+    box-shadow:
+      0 12px 40px rgba(0, 0, 0, 0.4),
+      0 0 20px var(--color-accent-muted),
+      0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+  }
+
+  /* ─── Noise Overlay ─── */
   .bg-noise {
     position: fixed;
     top: 0;
@@ -64,31 +114,65 @@
     height: 100vh;
     pointer-events: none;
     z-index: 50;
-    opacity: 0.03;
+    opacity: 0.025;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
   }
 
+  /* ─── Text Glow ─── */
   .text-glow {
-    text-shadow: 0 0 20px var(--color-accent-muted);
+    text-shadow: 0 0 24px var(--color-accent-glow);
+  }
+
+  /* ─── Section Eyebrow Label ─── */
+  .section-eyebrow {
+    display: inline-block;
+    font-family: var(--font-sans);
+    font-size: 0.6875rem; /* 11px */
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: var(--color-accent);
+  }
+
+  /* ─── Section Heading ─── */
+  .section-heading {
+    font-family: var(--font-display);
+    font-weight: 700;
+    color: var(--color-text-main);
+    line-height: 1.15;
+  }
+
+  /* ─── Accent Dot (for lists) ─── */
+  .accent-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--color-accent);
+    box-shadow: 0 0 8px var(--color-accent-glow);
+    flex-shrink: 0;
   }
 }
 
-/* Custom Scrollbar */
+/* ═══════════════════════════════════════════════════════════════════════════
+   SCROLLBAR
+   ═══════════════════════════════════════════════════════════════════════════ */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 ::-webkit-scrollbar-track {
   background: var(--color-background);
 }
 ::-webkit-scrollbar-thumb {
   background: var(--color-surface-border);
-  border-radius: 4px;
+  border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-text-muted);
 }
 
-/* ─── Marquee Keyframes (GPU-accelerated) ─── */
+/* ═══════════════════════════════════════════════════════════════════════════
+   MARQUEE KEYFRAMES (GPU-accelerated)
+   ═══════════════════════════════════════════════════════════════════════════ */
 @keyframes marquee-forward {
   from { transform: translate3d(0, 0, 0); }
   to   { transform: translate3d(-50%, 0, 0); }
@@ -99,3 +183,19 @@
   to   { transform: translate3d(0, 0, 0); }
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   ACCESSIBILITY
+   ═══════════════════════════════════════════════════════════════════════════ */
+*:focus-visible {
+  outline: 2px solid var(--color-accent) !important;
+  outline-offset: 2px !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

@@ -30,7 +30,7 @@ export default function NodeGraph() {
     };
     mediaQuery.addEventListener("change", handleMotionChange);
 
-    // Mouse tracking for gentle attraction (lerp target)
+    // Mouse tracking for gentle attraction
     const mouse = {
       x: width / 2,
       y: height / 2,
@@ -58,9 +58,9 @@ export default function NodeGraph() {
       parent.addEventListener("mouseleave", handleMouseLeave);
     }
 
-    // Colors
-    const colorAccent = "#FFB84D"; // warm amber
-    const colorAccent2 = "#6EE7B7"; // mint teal
+    // Design System Accents — Violet & Emerald
+    const colorAccent = "#A78BFA"; // Violet
+    const colorAccent2 = "#34D399"; // Emerald
 
     // Create 16 nodes (alternating colors)
     const nodeCount = 16;
@@ -100,7 +100,7 @@ export default function NodeGraph() {
             ctx.beginPath();
             ctx.moveTo(nodes[i].x, nodes[i].y);
             ctx.lineTo(nodes[j].x, nodes[j].y);
-            ctx.strokeStyle = nodes[i].color === colorAccent ? `rgba(255, 184, 77, ${alpha})` : `rgba(110, 231, 183, ${alpha})`;
+            ctx.strokeStyle = nodes[i].color === colorAccent ? `rgba(167, 139, 250, ${alpha})` : `rgba(52, 211, 153, ${alpha})`;
             ctx.lineWidth = 1;
             ctx.stroke();
           }
@@ -141,7 +141,7 @@ export default function NodeGraph() {
           node.y,
           glowRadius
         );
-        const baseRgb = node.color === colorAccent ? "255, 184, 77" : "110, 231, 183";
+        const baseRgb = node.color === colorAccent ? "167, 139, 250" : "52, 211, 153";
         radialGradient.addColorStop(0, `rgba(${baseRgb}, 0.8)`);
         radialGradient.addColorStop(0.5, `rgba(${baseRgb}, 0.2)`);
         radialGradient.addColorStop(1, `rgba(${baseRgb}, 0)`);
@@ -178,11 +178,10 @@ export default function NodeGraph() {
 
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-auto z-0 flex items-center justify-center">
-      {/* Subtle radial background glow using --accent & --accent-2 at low opacity */}
       <div
         className="absolute w-[600px] h-[600px] rounded-full blur-[120px] pointer-events-none opacity-20"
         style={{
-          background: "radial-gradient(circle, var(--accent) 0%, var(--accent-2) 60%, transparent 100%)",
+          background: "radial-gradient(circle, var(--color-accent) 0%, var(--color-accent-secondary) 60%, transparent 100%)",
         }}
       />
       <canvas ref={canvasRef} className="w-full h-full block relative z-10" />

@@ -56,7 +56,7 @@ function resolveIcon(name) {
 function SkillPill({ skill }) {
   const Icon = resolveIcon(skill.name);
   return (
-    <div className="skill-pill group flex items-center gap-2.5 px-4 py-2.5 rounded-xl border border-[var(--color-surface-border)] bg-[var(--color-surface)]/40 backdrop-blur-sm cursor-default select-none transition-all duration-200 hover:scale-[1.04] hover:border-[var(--color-accent)]/50 hover:bg-[var(--color-surface-hover)] hover:shadow-[0_0_12px_rgba(212,255,51,0.08)]">
+    <div className="skill-pill group flex items-center gap-2.5 px-4 py-2.5 rounded-xl border border-[var(--color-surface-border)] bg-[var(--color-surface)]/40 backdrop-blur-sm cursor-default select-none transition-all duration-200 hover:scale-[1.04] hover:border-[var(--color-accent)]/50 hover:bg-[var(--color-surface-hover)] hover:shadow-[0_0_12px_var(--color-accent-glow)]">
       <Icon className="w-4 h-4 shrink-0 text-[var(--color-text-muted)] group-hover:text-[var(--color-accent)] transition-colors duration-200" />
       <span className="font-sans text-sm font-medium text-[var(--color-text-main)] whitespace-nowrap leading-none">
         {skill.name}

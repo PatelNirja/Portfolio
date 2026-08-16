@@ -1,26 +1,27 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { GraduationCap, Calendar } from "lucide-react";
+import { GraduationCap, Calendar, Award } from "lucide-react";
 import { formatDate } from "../../utils/formatDate";
 
 export default function Education({ educations }) {
   if (!educations || educations.length === 0) return null;
 
   return (
-    <section id="education" className="py-24">
+    <section id="education" className="py-24 relative z-10">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center space-y-2 mb-16"
+          transition={{ duration: 0.5 }}
+          className="text-center space-y-3 mb-16"
         >
-          <h2 className="text-xs font-extrabold uppercase tracking-widest text-sky-600 dark:text-sky-400">
+          <span className="section-eyebrow text-glow">
             Academic Background
-          </h2>
-          <p className="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-slate-100">
+          </span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl section-heading">
             Education
-          </p>
+          </h2>
         </motion.div>
 
         <div className="grid grid-cols-1 gap-6">
@@ -30,30 +31,36 @@ export default function Education({ educations }) {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+              transition={{ delay: idx * 0.1, duration: 0.5 }}
+              className="glass-card glass-card-hover rounded-2xl p-6 sm:p-8 flex flex-col sm:flex-row sm:items-center justify-between gap-6"
             >
               <div className="flex items-start gap-4">
-                <div className="p-3 rounded-2xl bg-sky-50 dark:bg-sky-950/50 text-sky-600 shrink-0">
+                <div className="p-3.5 rounded-2xl bg-[var(--color-accent-muted)] border border-[var(--color-accent)]/30 text-[var(--color-accent)] shrink-0">
                   <GraduationCap className="w-6 h-6" />
                 </div>
-                <div className="space-y-1">
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100">{edu.degree}</h3>
-                  <p className="text-xs font-semibold text-sky-600 dark:text-sky-400">{edu.institution}</p>
+                <div className="space-y-1.5">
+                  <h3 className="text-xl font-bold font-display text-[var(--color-text-main)]">{edu.degree}</h3>
+                  <p className="text-sm font-semibold text-[var(--color-accent)]">{edu.institution}</p>
                   {edu.fieldOfStudy && (
-                    <p className="text-xs text-slate-500 dark:text-slate-400">{edu.fieldOfStudy}</p>
+                    <p className="text-sm text-[var(--color-text-muted)] font-sans">{edu.fieldOfStudy}</p>
                   )}
                   {edu.description && (
-                    <p className="text-xs text-slate-600 dark:text-slate-400 pt-2 leading-relaxed">{edu.description}</p>
+                    <p className="text-sm text-[var(--color-text-muted)] font-sans pt-2 leading-relaxed">{edu.description}</p>
                   )}
                 </div>
               </div>
 
-              <div className="text-right shrink-0">
-                <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full">
+              <div className="flex sm:flex-col items-start sm:items-end justify-between gap-2 shrink-0 border-t sm:border-t-0 border-[var(--color-surface-border)] pt-4 sm:pt-0">
+                <span className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1 rounded-full bg-[var(--color-accent-muted)] border border-[var(--color-accent)]/30 text-[var(--color-accent)]">
                   <Calendar className="w-3.5 h-3.5" />
                   {formatDate(edu.startDate)} - {edu.isCurrent ? "Present" : formatDate(edu.endDate)}
                 </span>
-                {edu.grade && <p className="text-xs font-bold text-slate-600 dark:text-slate-300 mt-2">Grade: {edu.grade}</p>}
+                {edu.grade && (
+                  <span className="inline-flex items-center gap-1 text-xs font-bold text-[var(--color-text-main)] bg-[var(--color-surface)] border border-[var(--color-surface-border)] px-3 py-1 rounded-lg">
+                    <Award className="w-3.5 h-3.5 text-[var(--color-accent)]" />
+                    Grade: {edu.grade}
+                  </span>
+                )}
               </div>
             </motion.div>
           ))}

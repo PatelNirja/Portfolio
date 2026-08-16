@@ -95,7 +95,7 @@ export default function Hero({ profile }) {
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
               transition={{ duration: 0.2 }}
-              className="px-8 py-4 rounded-xl bg-[var(--color-accent)] text-[#0B0D10] font-bold text-sm shadow-[0_0_20px_var(--color-accent-muted)] flex items-center gap-2 cursor-pointer font-sans transition-shadow hover:shadow-[0_0_30px_rgba(212,255,51,0.4)]"
+              className="px-8 py-4 rounded-xl bg-[var(--color-accent)] text-[#0B0D10] font-bold text-sm shadow-[0_0_20px_var(--color-accent-muted)] flex items-center gap-2 cursor-pointer font-sans transition-shadow hover:shadow-[0_0_30px_rgba(167,139,250,0.5)]"
             >
               <span>Explore Featured Work</span>
               <ArrowRight className="w-4 h-4" />

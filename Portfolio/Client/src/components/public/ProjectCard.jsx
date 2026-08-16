@@ -62,7 +62,7 @@ export default function ProjectCard({ project }) {
             {project.tags.slice(0, 4).map((tag, idx) => (
               <span
                 key={idx}
-                className="px-3 py-1.5 rounded-lg text-[11px] font-sans font-semibold bg-[var(--color-surface)]/50 border border-[var(--color-surface-border)] text-[var(--color-text-muted)] group-hover:border-[var(--color-surface-border)] group-hover:text-[var(--color-text-main)] transition-colors"
+                className="px-3 py-1.5 rounded-lg text-[11px] font-mono font-medium bg-[var(--color-surface)]/50 border border-[var(--color-surface-border)] text-[var(--color-text-muted)] group-hover:border-[var(--color-surface-border)] group-hover:text-[var(--color-text-main)] transition-colors"
               >
                 {tag}
               </span>

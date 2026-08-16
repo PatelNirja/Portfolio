@@ -106,13 +106,13 @@ export default function HomePage() {
             <div className="absolute inset-0 bg-gradient-to-b from-[var(--color-surface)]/20 to-[var(--color-background)] pointer-events-none"></div>
             
             <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="text-center space-y-4 mb-16">
-                <h2 className="text-sm font-sans font-bold uppercase tracking-[0.2em] text-[var(--color-accent)] text-glow">
+              <div className="text-center space-y-3 mb-16">
+                <span className="section-eyebrow text-glow">
                   Selected Work
-                </h2>
-                <p className="text-4xl sm:text-5xl font-bold font-display text-[var(--color-text-main)]">
+                </span>
+                <h2 className="text-3xl sm:text-4xl md:text-5xl section-heading">
                   Projects & Applications
-                </p>
+                </h2>
               </div>
 
               <ProjectFilters
