@@ -23,7 +23,7 @@ export default function ProjectCard({ project }) {
         <img
           src={project.thumbnail || DEFAULT_PROJECT_THUMB}
           alt={project.title}
-          className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-out"
+          className="w-full h-full object-cover group-hover:scale-105 transition-all duration-700 ease-out"
         />
 
         {/* Featured Badge */}

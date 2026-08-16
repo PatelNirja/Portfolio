@@ -74,12 +74,11 @@ export default function Hero({ profile }) {
           {/* Profile Image */}
           {profile?.profileImage && (
             <motion.div variants={itemVariants} className="inline-block mt-4">
-              <div className="w-32 h-32 sm:w-40 sm:h-40 rounded-full p-1.5 glass-card overflow-hidden relative group">
-                <div className="absolute inset-0 rounded-full border-2 border-transparent group-hover:border-[var(--color-accent)] transition-colors duration-500 z-20 pointer-events-none"></div>
+              <div className="w-32 h-32 sm:w-40 sm:h-40 rounded-full p-1 border-2 border-[var(--color-accent)]/50 shadow-[0_0_20px_var(--color-accent-muted)] overflow-hidden relative">
                 <img
                   src={profile.profileImage || DEFAULT_AVATAR}
                   alt={name}
-                  className="w-full h-full object-cover rounded-full filter grayscale hover:grayscale-0 transition-all duration-500 z-10 relative"
+                  className="w-full h-full object-cover rounded-full z-10 relative"
                 />
               </div>
             </motion.div>
