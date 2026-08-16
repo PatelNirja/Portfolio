@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { InfiniteSlider } from "../core/InfiniteSlider";
 
@@ -13,7 +13,7 @@ import {
   SiNpm, SiJest, SiWebpack, SiSvelte,
 } from "react-icons/si";
 import { FaAws, FaJava } from "react-icons/fa";
-import { Code2, Cpu, Zap, Database, Wrench } from "lucide-react";
+import { Code2, Cpu, Zap } from "lucide-react";
 
 // ─── Icon Resolver ────────────────────────────────────────────────────────────
 function resolveIcon(name) {
@@ -56,9 +56,9 @@ function resolveIcon(name) {
 function SkillPill({ skill }) {
   const Icon = resolveIcon(skill.name);
   return (
-    <div className="skill-pill group flex items-center gap-2.5 px-4 py-2.5 rounded-xl border border-[var(--color-surface-border)] bg-[var(--color-surface)]/40 backdrop-blur-sm cursor-default select-none transition-all duration-200 hover:scale-[1.04] hover:border-[var(--color-accent)]/50 hover:bg-[var(--color-surface-hover)] hover:shadow-[0_0_12px_var(--color-accent-glow)]">
-      <Icon className="w-4 h-4 shrink-0 text-[var(--color-text-muted)] group-hover:text-[var(--color-accent)] transition-colors duration-200" />
-      <span className="font-sans text-sm font-medium text-[var(--color-text-main)] whitespace-nowrap leading-none">
+    <div className="skill-pill group flex items-center gap-3 px-5 py-3 rounded-2xl border border-[var(--color-surface-border)] bg-[var(--color-surface)]/80 backdrop-blur-md cursor-default select-none transition-all duration-300 hover:scale-105 hover:border-[var(--color-accent)] hover:bg-[var(--color-surface-hover)] hover:shadow-[0_0_20px_var(--color-accent-muted)]">
+      <Icon className="w-5 h-5 shrink-0 text-[var(--color-accent)] group-hover:scale-110 transition-transform duration-200" />
+      <span className="font-sans text-sm font-semibold text-[var(--color-text-main)] whitespace-nowrap leading-none">
         {skill.name}
       </span>
     </div>
@@ -67,14 +67,12 @@ function SkillPill({ skill }) {
 
 // ─── Row config ───────────────────────────────────────────────────────────────
 const ROW_CONFIGS = [
-  { reverse: false, duration: 32, gap: 16 },
-  { reverse: true,  duration: 38, gap: 20 },
-  { reverse: false, duration: 35, gap: 14 },
-  { reverse: true,  duration: 42, gap: 18 },
-  { reverse: false, duration: 30, gap: 16 },
+  { reverse: false, duration: 35, gap: 20 },
+  { reverse: true,  duration: 40, gap: 20 },
+  { reverse: false, duration: 38, gap: 20 },
 ];
 
-// Distribute an array of skills across N rows as evenly as possible.
+// Distribute skills evenly across N rows
 function distributeIntoRows(skills, numRows) {
   const rows = Array.from({ length: numRows }, () => []);
   skills.forEach((skill, i) => {
@@ -87,7 +85,7 @@ function distributeIntoRows(skills, numRows) {
 export default function Skills({ skills }) {
   if (!skills || skills.length === 0) return null;
 
-  // Deduplicate by name (case-insensitive) and flatten all categories
+  // Deduplicate by name (case-insensitive)
   const seen = new Set();
   const allSkills = skills.filter((s) => {
     const key = s.name.toLowerCase().trim();
@@ -96,61 +94,55 @@ export default function Skills({ skills }) {
     return true;
   });
 
-  // Responsive: we always prepare 5 rows; CSS hides extras on small screens
-  const NUM_ROWS = Math.min(ROW_CONFIGS.length, allSkills.length);
-  const rows = distributeIntoRows(allSkills, NUM_ROWS);
+  // Calculate row distribution (max 3 rows for clean centering)
+  const numRows = Math.min(3, Math.max(1, Math.ceil(allSkills.length / 5)));
+  const rows = distributeIntoRows(allSkills, numRows);
 
   return (
     <section
       id="skills"
-      className="relative py-24 overflow-hidden"
+      className="relative py-24 overflow-hidden flex flex-col items-center justify-center text-center"
       style={{ contain: "layout" }}
     >
       {/* Ambient background glow */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0"
+        className="pointer-events-none absolute inset-0 flex items-center justify-center"
         style={{
           background:
-            "radial-gradient(ellipse 80% 50% at 50% 60%, rgba(80,120,255,0.05) 0%, transparent 70%), " +
-            "radial-gradient(ellipse 60% 40% at 20% 80%, rgba(120,60,220,0.04) 0%, transparent 70%)",
+            "radial-gradient(ellipse 70% 50% at 50% 50%, rgba(167,139,250,0.08) 0%, transparent 70%)",
         }}
       />
 
       {/* ─── Header ─── */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-16">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-14">
         <motion.div
           initial={{ opacity: 0, y: 18 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
+          className="space-y-3"
         >
-          <span className="inline-block font-sans text-[11px] uppercase tracking-[0.25em] font-bold text-[var(--color-accent)]">
+          <span className="section-eyebrow text-glow">
             Tech Stack
           </span>
-          <h2 className="mt-3 text-3xl md:text-4xl lg:text-5xl font-display font-bold text-[var(--color-text-main)] leading-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl section-heading">
             Technologies I Work With
           </h2>
-          <p className="mt-4 text-base text-[var(--color-text-muted)] font-sans max-w-xl mx-auto">
+          <p className="text-base text-[var(--color-text-muted)] font-sans max-w-xl mx-auto pt-1">
             Technologies I use to build modern full-stack and AI-powered products.
           </p>
         </motion.div>
       </div>
 
-      {/* ─── Marquee Rows ─── */}
-      <div className="relative z-10 space-y-4">
+      {/* ─── Centered Marquee Rows Container ─── */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto space-y-5 px-4 flex flex-col items-center justify-center">
         {rows.map((rowSkills, rowIdx) => {
-          // Skip empty rows
           if (rowSkills.length === 0) return null;
           const cfg = ROW_CONFIGS[rowIdx % ROW_CONFIGS.length];
 
-          // On mobile show only first 3 rows, on tablet first 4
-          const mobileHide = rowIdx >= 3 ? "hidden md:block" : "";
-          const tabletHide = rowIdx >= 4 ? "md:block lg:block" : "";
-          const hideClass = rowIdx >= 3 ? "hidden sm:block" : "";
-
           return (
-            <div key={rowIdx} className={`w-full ${hideClass}`}>
+            <div key={rowIdx} className="w-full flex justify-center items-center">
               <InfiniteSlider
                 reverse={cfg.reverse}
                 duration={cfg.duration}
@@ -164,6 +156,13 @@ export default function Skills({ skills }) {
             </div>
           );
         })}
+
+        {/* Static Centered Backup Grid for small skill counts or accessibility */}
+        <div className="flex flex-wrap items-center justify-center gap-3 pt-6 max-w-4xl mx-auto">
+          {allSkills.length <= 8 && allSkills.map((skill) => (
+            <SkillPill key={`static-${skill._id || skill.name}`} skill={skill} />
+          ))}
+        </div>
       </div>
     </section>
   );
