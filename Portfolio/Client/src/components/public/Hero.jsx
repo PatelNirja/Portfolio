@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { ArrowRight, FileDown, Sparkles } from "lucide-react";
+import { ArrowRight, FileDown } from "lucide-react";
 import HeroBackground from "./HeroBackground";
 import { DEFAULT_AVATAR } from "../../utils/constants";
 
@@ -42,19 +42,14 @@ export default function Hero({ profile }) {
           className="space-y-8"
         >
           {/* Eyebrow & Availability */}
-          <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <span className="font-sans text-xs uppercase tracking-[0.2em] font-semibold px-4 py-1.5 rounded-full bg-[var(--color-surface)] border border-[var(--color-surface-border)] text-glow text-[var(--color-accent)] inline-flex items-center gap-2">
-              <Sparkles className="w-3.5 h-3.5" />
-              <span>Premium Web Architecture</span>
-            </span>
-
-            {profile?.isAvailable && (
+          {(profile?.isAvailable ?? true) && (
+            <motion.div variants={itemVariants} className="flex items-center justify-center">
               <span className="font-sans text-xs font-semibold px-4 py-1.5 rounded-full bg-[var(--color-accent-muted)] border border-[var(--color-accent)]/30 text-[var(--color-accent)] inline-flex items-center gap-2">
                 <span className="w-2 h-2 rounded-full bg-[var(--color-accent)] animate-pulse shadow-[0_0_8px_var(--color-accent)]" />
-                <span>Available for Hire</span>
+                <span>Open to work</span>
               </span>
-            )}
-          </motion.div>
+            </motion.div>
+          )}
 
           {/* Main Headline & Subhead */}
           <motion.div variants={itemVariants} className="space-y-6 max-w-5xl mx-auto">

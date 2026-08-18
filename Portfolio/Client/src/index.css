@@ -6,11 +6,11 @@
    ═══════════════════════════════════════════════════════════════════════════ */
 @theme {
   /* ─── Backgrounds ─── */
-  --color-background: #0A0C10;
-  --color-surface: #111318;
-  --color-surface-hover: #191D24;
-  --color-surface-border: #252A33;
-  --color-surface-elevated: #1E222A;
+  --color-background: #0B0D12;
+  --color-surface: #13161C;
+  --color-surface-hover: #1C2029;
+  --color-surface-border: #2A2F3D;
+  --color-surface-elevated: #20242F;
 
   /* ─── Primary Accent — Violet ─── */
   --color-accent: #A78BFA;
@@ -22,9 +22,9 @@
   --color-accent-secondary: #34D399;
   --color-accent-secondary-muted: rgba(52, 211, 153, 0.15);
 
-  /* ─── Typography Colors ─── */
-  --color-text-main: #F0F2F5;
-  --color-text-muted: #7C8899;
+  /* ─── Typography Colors (High-Contrast Crisp Text) ─── */
+  --color-text-main: #FFFFFF;
+  --color-text-muted: #94A3B8;
 
   /* ─── Semantic ─── */
   --color-danger: #F87171;
@@ -44,6 +44,7 @@
   * {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   body {
@@ -69,58 +70,41 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   UTILITY CLASSES
+   UTILITY CLASSES — Crisp, Sharp & Clear UI
    ═══════════════════════════════════════════════════════════════════════════ */
 @layer utilities {
-  /* ─── Glass Surfaces ─── */
+  /* ─── Sharp Surfaces ─── */
   .glass {
-    background: rgba(17, 19, 24, 0.6);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    background: rgba(19, 22, 28, 0.92);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     border: 1px solid var(--color-surface-border);
   }
 
   .glass-card {
-    background: linear-gradient(
-      145deg,
-      rgba(25, 29, 36, 0.85) 0%,
-      rgba(17, 19, 24, 0.85) 100%
-    );
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    background: #13161C;
     border: 1px solid var(--color-surface-border);
-    box-shadow:
-      0 8px 32px rgba(0, 0, 0, 0.3),
-      0 0 0 1px rgba(255, 255, 255, 0.03) inset;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
   }
 
   .glass-card-hover {
-    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
   }
   .glass-card-hover:hover {
-    border-color: rgba(167, 139, 250, 0.25);
+    border-color: rgba(167, 139, 250, 0.4);
     box-shadow:
-      0 12px 40px rgba(0, 0, 0, 0.4),
-      0 0 20px var(--color-accent-muted),
-      0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+      0 12px 40px rgba(0, 0, 0, 0.5),
+      0 0 20px var(--color-accent-muted);
   }
 
-  /* ─── Noise Overlay ─── */
+  /* ─── Noise Overlay Disabled for Razor-Sharp Clarity ─── */
   .bg-noise {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    pointer-events: none;
-    z-index: 50;
-    opacity: 0.025;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    display: none !important;
   }
 
   /* ─── Text Glow ─── */
   .text-glow {
-    text-shadow: 0 0 24px var(--color-accent-glow);
+    text-shadow: 0 0 16px var(--color-accent-glow);
   }
 
   /* ─── Section Eyebrow Label ─── */
